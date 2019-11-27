@@ -1,0 +1,151 @@
+public class Main {
+
+    public static void main(String[] args) {
+        List lista=new List();
+        lista.addFirst("1");
+        lista.add(2, "3");
+        lista.add(3, "5");
+        lista.listar();
+    }
+    
+}
+
+ 
+  
+
+
+class List {//implementando a lista
+    protected String dado;
+    protected List proximo;
+    protected int size;
+    
+    public void List(){
+        proximo=null;
+        size=0;
+    }
+    public boolean isEmpty(){
+        return(proximo==null);
+    }
+    
+    public void addLast(String ndado){
+        List nnodo=new List();
+        nnodo.dado=ndado;
+        if(isEmpty()){
+            proximo=nnodo;
+        }
+        else{
+            List temp=proximo;
+            while(temp.proximo!=null){
+                temp=temp.proximo;
+            }
+            temp.proximo=nnodo;
+        }
+        size++;
+    }
+    public void addFirst(String ndado){
+        if(size==0){
+            addLast(ndado);
+        }
+        else{
+            List nnodo=new List();
+            nnodo.dado=ndado;
+            nnodo.proximo=proximo;
+            proximo=nnodo;
+            size++;
+        }
+    }
+    
+    public void resetList(){
+        List();
+    }
+    
+    public void listar(){
+        List temp=proximo;
+        if(isEmpty()){
+            System.out.println("lista vazia");
+        }
+        else{
+            System.out.println("listando:");
+            for(int c=1;c<=size;c++){
+                System.out.println(c+"-"+temp.dado);
+                temp=temp.proximo;
+            }
+        }
+    }
+    
+    public void add(int pos,String ndado){
+        if(pos<=1){
+            addFirst(ndado);
+        }
+        else{
+            List nnodo=new List();
+            nnodo.dado=ndado;
+            List temp=proximo;
+            for(int c=2;c<pos;c++){
+                temp=temp.proximo;
+            }
+            nnodo.proximo=temp.proximo;
+            temp.proximo=nnodo;
+            size++;
+        }
+        
+    }
+    
+    public void removeFirst(){
+        if(size==0){
+        }
+        else{
+            proximo=proximo.proximo;
+            size--;
+        }
+    }
+    public int showSize(){
+        return size;
+    }
+    
+    public void removeLast(){
+        if(size==0){
+        }
+        else{
+            List temp=proximo;
+            while(temp.proximo!=null){
+                temp=temp.proximo;
+            }
+            temp=null;
+            size--;
+        }
+    }
+        
+    public void remove(int pos){
+        if(size==0){
+            System.out.println("lista vazia, impossivel remover");
+        }
+        else{
+            if(pos==size){
+                removeLast();
+            }
+            else{
+                List temp=proximo;
+                for(int c=1;c<(pos-1);c++){
+                    temp=temp.proximo;
+                }
+                if(pos==1){
+                    removeFirst();
+                }
+                else{
+                    List prox=temp.proximo.proximo;
+                    temp.proximo=prox;
+                    size--;
+                }
+            }
+        }
+    }
+    
+    public String getPos(int pos){
+        List temp=proximo;
+        for(int c=1;c<pos;c++){
+            temp=temp.proximo;
+        }
+        return (temp.dado);
+    }
+}
